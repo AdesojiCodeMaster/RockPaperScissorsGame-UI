@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+  <title> Rock Paper Scissors Game!</title>
+</head>
+
+<body>
+<header><h1> ROCK-PAPER-SCISSORS GAME</h1></header>
+
+<h1> Click your choice: </h1>
+
+
+<div class="container1">
+
+<button class="roc" name="rock">Rock</button>
+<button class="pap" name="paper">Paper</button>
+<button class="sci" name="scissors">Scissors</button>
+
+<button class = "newGame">GAME RULES!</button>
+
+</div> <div class="results">
+	
+</div>
+</body>
+<style>
+h1 {
+background-color: yellow;
+border-style: solid;
+text-align: -webkit-center;}
+
+.roc{width: 140px;
+     height: 60px;
+    margin-left:280px;
+    margin-top: 120px;
+    background-color: blue;
+    box-shadow: 0 0 black;
+    font-size: large;
+    font-style: inherit;}
+
+.pap{width: 140px;
+    height: 60px;
+    margin-left: 25px;
+    margin-top: 120px;
+    background-color: crimson;
+    box-shadow: 2px 1px #2196F3;
+    font-size: large;
+    font-style: inherit;}
+   
+   .sci{width: 140px;
+    height: 60px;
+    margin-left: 25px;
+    margin-top: 120px;
+    background-color: aqua;
+    box-shadow: 1.5px 3px black;
+    font-size:large;
+    font-style: inherit;}
+    
+    .newGame{width: 140px;
+    height: 60px;
+    margin-left: 25px;
+    margin-top:120px;
+    box-shadow: 1.5px 3px black;
+    font-size: large;
+    font-style: inherit;
+    color: #E91E63;
+    text-shadow: 1px 2px black;}
+    
+    body{background-color: green;}
+
+	.results{ color:coral;
+    font-size: x-large;}
+
+
+</style>
+
+
+
+<script type="text/javascript">
+	let gameCount = 0
+	//intitalize scores
+	let playerScore = 0
+	let	computerScore = 0
+	//values for how often the player uses a certain object
+	let rockCount = 0
+	let paperCount = 0
+	let scissorsCount = 0
+	
+		
+	//how the computer determins R, P, S
+	function computerPlay() {
+    
+    
+		let movementNumber = Math.floor(Math.random()*3)
+		if (movementNumber === 0) {
+			return "rock" 
+		} else if (movementNumber === 1) {
+			return "paper"
+		} else {
+			return "scissors"
+		}
+	}
+	
+	
+	function playTurns(e) {
+		
+		let playerSelection = e.path[0].name
+		
+		const computerSelection = computerPlay()
+		
+		const resultsDiv = document.querySelector('.results')
+		const resultsTxt = document.createElement('p')
+		const scoreTxt = document.createElement('p')
+		const gameNum = document.createElement('h3')
+		const itemJudge = document.createElement('h4')
+		
+		
+		
+		if (playerSelection == "rock") {
+			rockCount++
+		} else if (playerSelection == "paper") {
+			paperCount++
+		} else if (playerSelection == "scissors") {
+			scissorsCount++
+		} 
+		
+		
+		if ((playerSelection === "rock"
+			&& 
+			computerSelection === "rock") 
+			|| (playerSelection === "paper" 
+				&& computerSelection === "paper") 
+			|| (playerSelection === "scissors" 
+				&& computerSelection === "scissors")) {
+				gameCount++
+				resultsDiv.appendChild(gameNum)
+				resultsTxt.textContent = "Same answers! It's a tie!"
+				resultsDiv.appendChild(resultsTxt); 
+				resultsDiv.appendChild(scoreTxt);
+		//player wins scenarios
+		} else if (playerSelection  === "rock" 
+			&& computerSelection === "scissors") {
+			resultsTxt.textContent = "Rock beats scissors! You win!"
+			gameCount++
+			resultsDiv.appendChild(gameNum)
+			resultsDiv.appendChild(resultsTxt)
+			 
+			playerScore++
+			resultsDiv.appendChild(scoreTxt);
+			
+		}
+		else if (playerSelection  === "paper" 
+			&& computerSelection === "rock")  {
+			gameCount++
+			resultsDiv.appendChild(gameNum) 
+			resultsTxt.textContent = "Paper beats rock! You win!"
+			resultsDiv.appendChild(resultsTxt)
+			playerScore++
+			resultsDiv.appendChild(scoreTxt);
+			
+		} else if (playerSelection  === "scissors" 
+			&& computerSelection === "paper"){ 
+			gameCount++
+			resultsDiv.appendChild(gameNum)
+			resultsTxt.textContent = "Scissors beats paper! You win!"
+			resultsDiv.appendChild(resultsTxt)
+			playerScore++
+		//computer wins scenarios
+		} else if (computerSelection  === "rock" 
+			&& playerSelection === "scissors") {
+			gameCount++
+			resultsDiv.appendChild(gameNum)
+			resultsTxt.textContent = "Rock beats scissors! Computer wins!"
+			resultsDiv.appendChild(resultsTxt)
+			
+			computerScore++
+			resultsDiv.appendChild(scoreTxt);
+			 
+		}
+		else if (computerSelection  === "paper" 
+			&& playerSelection === "rock")  {
+			gameCount++
+			resultsDiv.appendChild(gameNum)
+			resultsTxt.textContent = "Paper beats rock! Computer wins!"
+			resultsDiv.appendChild(resultsTxt)
+			 
+			computerScore++
+			resultsDiv.appendChild(scoreTxt);
+			
+		} else if (computerSelection  === "scissors" 
+			&& playerSelection == "paper"){
+			gameCount++
+			resultsDiv.appendChild(gameNum) 
+			resultsTxt.textContent = "Scissors beats paper! Computer wins!"
+			resultsDiv.appendChild(resultsTxt)
+			 
+			computerScore++
+			resultsDiv.appendChild(scoreTxt);
+			
+		} 
+		scoreTxt.textContent = "Player: " + playerScore + ", Computer: " + computerScore;
+		if (gameCount <= 5) {
+			gameNum.textContent = "Game " + gameCount + " of 5"
+		} else { 
+			gameNum.textContent = "Game 1 of 5"
+			gameCount = 1
+			computerScore = 0
+			playerScore = 0
+			rockCount = 0
+			paperCount = 0
+			scissorsCount = 0
+		}
+		if (gameCount == 5 && rockCount == 5) {
+			itemJudge.textContent = "You played Rock all 5 times! You uh...sure do like rocks, huh."
+			resultsDiv.appendChild(itemJudge) 
+		} else if (gameCount == 5 && paperCount == 5) {
+			itemJudge.textContent = "You played Paper all 5 times! Golly, do you like paper!"
+			resultsDiv.appendChild(itemJudge) 
+		} else if (gameCount == 5 && scissorsCount == 5) {
+			itemJudge.textContent = "You played Scissors all 5 times! Wow do you like scissors...Hmm."
+			resultsDiv.appendChild(itemJudge) 
+		} else if (gameCount == 5 && rockCount !== 5 && scissorsCount !== 5 && paperCount !== 5) {
+			 itemJudge.textContent = "You played Rock " + rockCount + " times, Paper " + paperCount + " times, and Scissors " + scissorsCount + " times."
+			resultsDiv.appendChild(itemJudge)
+		}
+		}
+		
+	window.addEventListener('click', playTurns)
+
+</script>
+
+<script>
+
+
+const container1 = document.querySelector(".container1");
+
+const para = document.createElement("p");
+para.textContent = " ";
+container1.appendChild(para);
+
+const para2 = document.createElement("p");
+para2.textContent = " ";
+container1.appendChild(para2);
+
+const para3 = document.createElement("p");
+para3.textContent = " ";
+container1.appendChild(para3);
+
+const para4 = document.createElement("p");
+para4.textContent = " ";
+container1.appendChild(para4);
+
+const para5 = document.createElement("p");
+para5.textContent = " ";
+container1.appendChild(para5);
+
+
+
+const btn = document.querySelector(".newGame");
+
+btn.addEventListener("click", function(){para.textContent ="1. After the player makes his choice by clicking on any button above, the computer will also make a random choice.";
+
+para2.textContent =" 2.The choices of both players will be compared based on the following rules: *Rock beats Scissors.  *Scissors beats Paper.  *Paper beats Rock.  *If both players have same choice then it's a Tie.";
+
+para3.textContent = "3.Winner of a round will get a point.";
+
+para4.textContent ="4. In case of a tie nobody will get any points.";
+
+para5.textContent = "5.The first player to reach a score of 5 points will be declared the final winner.";
+
+});
+
+
+</script>       
+     
+     
+
+  
+</html>
+
+
